@@ -1,4 +1,4 @@
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from fastapi import FastAPI, HTTPException
@@ -45,13 +45,7 @@ Output: "Invalid output."
 """
 
 
-groq_llm = ChatGroq(
-    model="mixtral-8x7b-32768",
-    temperature=0,
-    max_tokens=1000,
-    timeout=10, 
-    max_retries=2,
-)
+google_llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp")
 
 
 
@@ -76,7 +70,7 @@ prompt = ChatPromptTemplate(
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
 conversation = LLMChain(
-    llm=groq_llm,
+    llm=google_llm,
     prompt=prompt,
     memory=memory
 )
